@@ -39,4 +39,38 @@ CODON_TABLE = {
 }
 
 
+def validate_sequence(sequence):
+    sequence = "".join(sequence.upper().split())
+
+    if not sequence:
+        return False, "The sequence cannot be empty."
+
+    for base in sequence:
+        if base not in "ATGC":
+            return False, "Invalid DNA sequence. Use only A, T, G and C."
+
+    return True, sequence
+
+
+
+def split_into_codons(sequence):
+    codons = []
+
+    for i in range(0, len(sequence) - 2, 3):
+        codons.append(sequence[i:i + 3])
+
+    remainder = sequence[len(codons) * 3:]
+    return codons, remainder
+
+
+
+def translate_codons(codons):
+    amino_acids = []
+
+    for codon in codons:
+        amino_acids.append(CODON_TABLE[codon])
+
+    return amino_acids
+
+
 
