@@ -104,3 +104,57 @@ def display_codon_table():
         print(codon, ":", CODON_TABLE[codon])
 
 
+
+def main():
+    print("DNA Codon Table Generator")
+    print("-------------------------")
+
+    sequence = input("Enter a DNA sequence: ")
+
+    valid, result = validate_sequence(sequence)
+
+    if not valid:
+        print(result)
+        return
+
+    sequence = result
+
+    codons, remainder = split_into_codons(sequence)
+    amino_acids = translate_codons(codons)
+
+    print("\nDNA sequence:", sequence)
+    print("Codons:", "-".join(codons))
+    print("Amino acids:", " - ".join(amino_acids))
+
+
+    start_positions = find_start_codons(codons)
+    print("\nStart codons:-")
+
+    if len(start_positions) > 0:
+        for position in start_positions:
+            print("Codon:", codons[position - 1],
+                  "| Position:", position)
+    else:
+        print("No start codons found.")
+
+
+    stop_positions = find_stop_codons(codons)
+    print("\nStop codons:-")
+
+    if len(stop_positions) > 0:
+        for position in stop_positions:
+            print("Codon:", codons[position - 1],
+                  "| Position:", position)
+    else:
+        print("No stop codons found.")
+
+
+    if remainder:
+        print("\nIncomplete codon at the end:", remainder)
+        print("These bases were not translated.")
+
+    display_codon_table()
+
+
+if __name__ == "__main__":
+    main()
