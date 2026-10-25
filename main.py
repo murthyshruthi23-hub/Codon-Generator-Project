@@ -74,3 +74,33 @@ def translate_codons(codons):
 
 
 
+def find_start_codons(codons):
+    start_positions = []
+
+    for i, codon in enumerate(codons):
+        if codon == "ATG":
+            start_positions.append(i + 1)
+
+    return start_positions
+
+
+
+def find_stop_codons(codons):
+    stop_positions = []
+
+    for i, codon in enumerate(codons):
+        if codon in ["TAA", "TAG", "TGA"]:
+            stop_positions.append(i + 1)
+
+    return stop_positions
+
+
+
+def display_codon_table():
+    print("\nDNA CODON TABLE FOR REFERENCE")
+    print("-----------------------------")
+
+    for codon in sorted(CODON_TABLE):
+        print(codon, ":", CODON_TABLE[codon])
+
+
