@@ -90,25 +90,35 @@ def translate_codons(codons, sequence_type):
 
 
 
-def find_start_codons(codons):
-    start_positions = []
+def find_start_codons(codons, sequence_type):
+    if sequence_type == "DNA":
+        start_codon = "ATG"
+    else:
+        start_codon = "AUG"
 
-    for i, codon in enumerate(codons):
-        if codon == "ATG":
-            start_positions.append(i + 1)
+    positions = []
 
-    return start_positions
+    for index in range(len(codons)):
+        if codons[index] == start_codon:
+            positions.append(index + 1)
+
+    return positions
 
 
 
-def find_stop_codons(codons):
-    stop_positions = []
+def find_stop_codons(codons, sequence_type):
+    if sequence_type == "DNA":
+        stop_codons = ["TAA", "TAG", "TGA"]
+    else:
+        stop_codons = ["UAA", "UAG", "UGA"]
 
-    for i, codon in enumerate(codons):
-        if codon in ["TAA", "TAG", "TGA"]:
-            stop_positions.append(i + 1)
+    positions = []
 
-    return stop_positions
+    for index in range(len(codons)):
+        if codons[index] in stop_codons:
+            positions.append(index + 1)
+
+    return positions
 
 
 
