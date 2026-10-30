@@ -124,7 +124,7 @@ def find_stop_codons(codons, sequence_type):
 
 def display_codon_table(sequence_type):
     print("\nCODON TABLE FOR REFERENCE")
-    print("---------------------------")
+    print("--------------------------")
 
     codons = sorted(CODON_TABLE.keys())
 
@@ -140,12 +140,18 @@ def display_codon_table(sequence_type):
 
 
 def main():
-    print("DNA Codon Table Generator")
-    print("-------------------------")
+    print("Codon Table Generator")
+    print("-----------------------")
 
-    sequence = input("Enter a DNA sequence: ")
+    sequence_type = input("Enter sequence type (DNA/RNA): ").upper()
 
-    valid, result = validate_sequence(sequence)
+    if sequence_type != "DNA" and sequence_type != "RNA":
+        print("Invalid choice. Please enter DNA or RNA.")
+        return
+
+    sequence = input("Enter a " + sequence_type + " sequence: ")
+
+    valid, result = validate_sequence(sequence, sequence_type)
 
     if not valid:
         print(result)
@@ -154,14 +160,14 @@ def main():
     sequence = result
 
     codons, remainder = split_into_codons(sequence)
-    amino_acids = translate_codons(codons)
+    amino_acids = translate_codons(codons, sequence_type)
 
-    print("\nDNA sequence:", sequence)
+    print("\n" + sequence_type + " sequence:", sequence)
     print("Codons:", "-".join(codons))
     print("Amino acids:", " - ".join(amino_acids))
 
 
-    start_positions = find_start_codons(codons)
+    start_positions = find_start_codons(codons, sequence_type)
     print("\nStart codons:-")
 
     if len(start_positions) > 0:
@@ -172,7 +178,7 @@ def main():
         print("No start codons found.")
 
 
-    stop_positions = find_stop_codons(codons)
+    stop_positions = find_stop_codons(codons, sequence_type)
     print("\nStop codons:-")
 
     if len(stop_positions) > 0:
@@ -187,7 +193,8 @@ def main():
         print("\nIncomplete codon at the end:", remainder)
         print("These bases were not translated.")
 
-    display_codon_table()
+    display_codon_table(sequence_type)
+
 
 
 if __name__ == "__main__":
