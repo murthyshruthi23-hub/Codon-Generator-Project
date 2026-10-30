@@ -1,4 +1,4 @@
-# DNA Codon Generator
+#Codon Generator Project
 
 CODON_TABLE = {
     "TTT": "Phenylalanine", "TTC": "Phenylalanine",
