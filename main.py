@@ -74,11 +74,17 @@ def split_into_codons(sequence):
 
 
 
-def translate_codons(codons):
+def translate_codons(codons, sequence_type):
     amino_acids = []
 
     for codon in codons:
-        amino_acids.append(CODON_TABLE[codon])
+        lookup_codon = codon
+
+        if sequence_type == "RNA":
+            lookup_codon = codon.replace("U", "T")
+
+        amino_acid = CODON_TABLE[lookup_codon]
+        amino_acids.append(amino_acid)
 
     return amino_acids
 
