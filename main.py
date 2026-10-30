@@ -62,11 +62,14 @@ def validate_sequence(sequence, sequence_type):
 
 def split_into_codons(sequence):
     codons = []
+    position = 0
 
-    for i in range(0, len(sequence) - 2, 3):
-        codons.append(sequence[i:i + 3])
+    while position + 3 <= len(sequence):
+        codon = sequence[position:position + 3]
+        codons.append(codon)
+        position = position + 3
 
-    remainder = sequence[len(codons) * 3:]
+    remainder = sequence[position:]
     return codons, remainder
 
 
