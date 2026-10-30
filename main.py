@@ -122,12 +122,20 @@ def find_stop_codons(codons, sequence_type):
 
 
 
-def display_codon_table():
-    print("\nDNA CODON TABLE FOR REFERENCE")
-    print("-----------------------------")
+def display_codon_table(sequence_type):
+    print("\nCODON TABLE FOR REFERENCE")
+    print("---------------------------")
 
-    for codon in sorted(CODON_TABLE):
-        print(codon, ":", CODON_TABLE[codon])
+    codons = sorted(CODON_TABLE.keys())
+
+    for codon in codons:
+        displayed_codon = codon
+
+        if sequence_type == "RNA":
+            displayed_codon = codon.replace("T", "U")
+
+        print(displayed_codon, ":", CODON_TABLE[codon])
+
 
 
 
