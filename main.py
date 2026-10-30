@@ -39,18 +39,25 @@ CODON_TABLE = {
 }
 
 
-def validate_sequence(sequence):
-    sequence = "".join(sequence.upper().split())
+def validate_sequence(sequence, sequence_type):
+    sequence = sequence.upper()
+    sequence = sequence.replace(" ", "")
+    sequence = sequence.replace("\n", "")
+    sequence = sequence.replace("\t", "")
 
-    if not sequence:
+    if sequence == "":
         return False, "The sequence cannot be empty."
 
+    if sequence_type == "DNA":
+        allowed_bases = "ATGC"
+    else:
+        allowed_bases = "AUGC"
+
     for base in sequence:
-        if base not in "ATGC":
-            return False, "Invalid DNA sequence. Use only A, T, G and C."
+        if base not in allowed_bases:
+            return False, "Invalid base found: " + base
 
     return True, sequence
-
 
 
 def split_into_codons(sequence):
